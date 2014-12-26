@@ -24,7 +24,7 @@ end
 
 {Browse {Fact2 3 1}}
 
-% Sum exeercise
+% Sum exercise
 declare
 fun {MainSum N}
    local Sum in
@@ -37,5 +37,40 @@ fun {MainSum N}
 end
 
 {Browse {MainSum 6}}
+
+% Mirror exercise
+declare
+fun {MainMirror Int}
+   local Mirror in
+      fun {Mirror Int Acc}
+	 if Int==0 then Acc div 10
+	 else
+	    {Mirror (Int div 10) (Acc+(Int mod 10))*10}
+	 end
+      end
+      {Mirror Int 0}
+   end
+end
+
+{Browse {MainMirror 12345}}
+
+% Prime exercise
+
+declare
+fun {Prime N}
+   local Division in
+      fun {Division N Acc}
+	 if Acc==N then true
+	 elseif N mod Acc==0 then false
+	 else
+	    {Division N Acc+1}
+	 end 
+      end
+      {Division N 2}
+   end
+end
+
+{Browse {Prime 997}}
+
 
 
