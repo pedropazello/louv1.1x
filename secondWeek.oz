@@ -72,5 +72,20 @@ end
 
 {Browse {Prime 997}}
 
+% fib exercise
 
+declare
+fun {Fib N}
+   local FibAux in
+      fun {FibAux N Acc1 Acc2}
+	 if N==1 then Acc1
+	 else
+	    {FibAux N-1 Acc1+Acc2 Acc1}
+	 end
+      end
+      {FibAux N 0 1}
+   end
+end
+
+{Browse {Fib 13}}
 
