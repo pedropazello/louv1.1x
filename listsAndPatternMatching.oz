@@ -108,7 +108,7 @@ local Sum Sum2 Sum3 in
    end
    {Browse {Sum2 [5 6 7] 0}}
 
-   % Patterb engineering
+   % Pattern engineering
    fun {Sum3 L A}
       case L
       of H1|H2|T then {Sum3 T H1+H2+A}
@@ -161,5 +161,107 @@ local R in{Append [1 2 5] [8 7 6] R}
    {Browse R}
 end
 
+% book examples
 
-      
+declare
+fun {Length Ls}
+   case Ls
+   of nil then 0
+   [] _|Lr then 1+{Length Lr}
+   end
+end
+
+{Browse {Length [a b c]}}
+
+declare
+fun {Append Ls Ms}
+   case Ls
+   of nil then Ms
+   [] X|Lr then X|{Append Lr Ms}
+   end
+end
+
+{Browse {Append [1 2 3] [4 5 6]}}
+
+declare
+fun {Nth Xs N}
+   if N==1 then Xs.1
+   elseif N > 1 then {Nth Xs.2 N-1}
+   end
+end
+
+{Browse {Nth [1 2] 2}}
+
+declare
+fun {SumList Xs}
+   case Xs
+   of nil then 0
+   [] X|Xr then X+{SumList Xr}
+   end
+end
+
+{Browse {SumList [1 2 3]}}
+
+
+declare
+fun {Prefix L1 L2}
+   if L1 == nil then true
+   else if L2 == nil then false 
+	else if L1.1 == L2.1 then {Prefix L1.2 L2.2}
+	     else false
+	     end
+	end
+   end
+end
+
+% {Browse {Prefix [1 2 3] [1 2 3 4 5]}}
+
+declare
+fun {FindString L1 L2}
+   if L1 == nil then true
+   else
+      if L2 == nil then false
+      else
+	 if {Prefix L1 L2} then true
+	 else
+	    {FindString L1 L2.2}
+	end
+      end
+   end
+end
+
+{Browse {FindString [1 2 3] [4 5 1 2 2 3 4 4]}}
+
+% prefix
+% if L1 == nil, it means L1 is end and all numbers are equals
+% if L2 == nil, it means L1 is greater than L2 and is diferent
+% if L1 head is equals L2 head, it means the numbers are equals
+% than prefix with tails are called, and the head of tails
+% is evalueted
+% if two heads are diferent, so the numbers are diferents then return false
+
+% findString
+% findString uses prefix to return if the prefix has here, if the
+% the prefix not match, just read the tail of find string and
+% look for the prefix again
+
+% flatten
+
+declare
+fun {FlattenList L}
+   local FlattenMain in
+      fun {FlattenMain L L2}
+	 if L == nil then L2
+	 else
+	    if {IsList L.1} then {FlattenMain L.2 {Append L2 L.1}}
+	    else {FlattenMain L.2 {Append L.2 L2|L.1}}
+	    end
+	 end
+      end
+      if {IsList L.1} then {FlattenMain L.2 L.1}
+      else {FlattenMain L.2 [L.1]}
+      end
+   end
+end
+
+{Browse {FlattenList [1[2][2][3[4]]]}}
